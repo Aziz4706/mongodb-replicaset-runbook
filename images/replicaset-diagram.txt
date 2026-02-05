@@ -1,7 +1,0 @@
-
-   mongo1 (PRIMARY)
-        |
-   --------------
-   |            |
-mongo2       mongo3
-SECONDARY    SECONDARY
