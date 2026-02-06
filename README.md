@@ -436,7 +436,6 @@ docker exec -it mongo-rs-mongo1 mongosh -u mongoadmin -p mongopassword --authent
 ```
 
 ---
-
 ## Troubleshooting
 
 ### 1) `rs.add(...)` hata veriyor / node SECONDARY olmuyor
@@ -497,7 +496,4 @@ Rollback gereksinimi varsa üretim öncesi mutlaka staging’de prova edin.
 
 ---
 
-## Lisans / Kullanım
 
-Bu doküman genel kullanım amaçlıdır.
-Kuruma özel path, kullanıcı ve credential’lar anonimleştirilmiştir.
