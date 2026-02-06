@@ -58,8 +58,6 @@ Standalone MongoDB:
 - ❌ Bakım sırasında downtime zorunludur
 - ❌ Ölçeklenebilirlik ve okuma dağıtımı yoktur
 
-Üretim ortamında standalone MongoDB **riskli bir kumardır**. Kazanırsan da kimse alkışlamaz.
-
 ---
 
 ## Replica Set’in Sağladığı Avantajlar
@@ -216,7 +214,7 @@ services:
     hostname: mongo1
     environment:
       - MONGO_INITDB_DATABASE=admin
-      - MONGO_INITDB_ROOT_USERNAME=mongoadmin
+      - MONGO_INITDB_ROOT_USERNAME=mongopassword
       - MONGO_INITDB_ROOT_PASSWORD=mongoadmin
     volumes:
       - /etc/localtime:/etc/localtime:ro
@@ -245,7 +243,7 @@ docker logs -f mongo-rs-mongo1
 Kontrol:
 
 ```bash
-docker exec -it mongo-rs-mongo1 mongosh -u mongoadmin -p mongoadmin --authenticationDatabase admin --eval 'db.runCommand({ping:1})'
+docker exec -it mongo-rs-mongo1 mongosh -u mongoadmin -p mongopassword --authenticationDatabase admin --eval 'db.runCommand({ping:1})'
 ```
 
 ---
@@ -257,7 +255,7 @@ Replica set kendiliğinden oluşmaz, manuel başlatılır.
 mongo1 shell:
 
 ```bash
-docker exec -it mongo-rs-mongo1 mongosh -u mongoadmin -p mongoadmin --authenticationDatabase admin
+docker exec -it mongo-rs-mongo1 mongosh -u mongoadmin -p mongopassword --authenticationDatabase admin
 ```
 
 Initialize:
@@ -346,7 +344,7 @@ docker exec -it mongo-rs-mongo3 mongosh --eval 'db.runCommand({ping:1})'
 mongo1 shell’e girin:
 
 ```bash
-docker exec -it mongo-rs-mongo1 mongosh -u mongoadmin -p mongoadmin --authenticationDatabase admin
+docker exec -it mongo-rs-mongo1 mongosh -u mongoadmin -p mongopassword --authenticationDatabase admin
 ```
 
 Ekleyin:
@@ -406,7 +404,7 @@ rs.reconfig(cfg);
 Priority görüntüleme:
 
 ```bash
-docker exec -it mongo-rs-mongo1 mongosh -u mongoadmin -p mongoadmin --authenticationDatabase admin --eval 'rs.conf().members.map(m=>({host:m.host,priority:m.priority,votes:m.votes}))'
+docker exec -it mongo-rs-mongo1 mongosh -u mongoadmin -p mongopassword --authenticationDatabase admin --eval 'rs.conf().members.map(m=>({host:m.host,priority:m.priority,votes:m.votes}))'
 ```
 
 ---
@@ -416,25 +414,25 @@ docker exec -it mongo-rs-mongo1 mongosh -u mongoadmin -p mongoadmin --authentica
 Replica set durum:
 
 ```bash
-docker exec -it mongo-rs-mongo1 mongosh -u mongoadmin -p mongoadmin --authenticationDatabase admin --eval 'rs.status()'
+docker exec -it mongo-rs-mongo1 mongosh -u mongoadmin -p mongopassword --authenticationDatabase admin --eval 'rs.status()'
 ```
 
 Health özet:
 
 ```bash
-docker exec -it mongo-rs-mongo1 mongosh -u mongoadmin -p mongoadmin --authenticationDatabase admin --eval 'db.adminCommand({replSetGetStatus:1}).members.map(m=>({name:m.name,stateStr:m.stateStr,health:m.health,syncingTo:m.syncingTo,info:m.info}))'
+docker exec -it mongo-rs-mongo1 mongosh -u mongoadmin -p mongopassword --authenticationDatabase admin --eval 'db.adminCommand({replSetGetStatus:1}).members.map(m=>({name:m.name,stateStr:m.stateStr,health:m.health,syncingTo:m.syncingTo,info:m.info}))'
 ```
 
 Replication lag:
 
 ```bash
-docker exec -it mongo-rs-mongo1 mongosh -u mongoadmin -p mongoadmin --authenticationDatabase admin --eval 'rs.printSecondaryReplicationInfo()'
+docker exec -it mongo-rs-mongo1 mongosh -u mongoadmin -p mongopassword --authenticationDatabase admin --eval 'rs.printSecondaryReplicationInfo()'
 ```
 
 Aktif connection sayısı:
 
 ```bash
-docker exec -it mongo-rs-mongo1 mongosh -u mongoadmin -p mongoadmin --authenticationDatabase admin --quiet --eval 'db.serverStatus().connections'
+docker exec -it mongo-rs-mongo1 mongosh -u mongoadmin -p mongopassword --authenticationDatabase admin --quiet --eval 'db.serverStatus().connections'
 ```
 
 ---
